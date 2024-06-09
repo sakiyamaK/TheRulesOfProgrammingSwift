@@ -1,4 +1,4 @@
-// P14
+// P15
 
 import Foundation
 
@@ -30,40 +30,11 @@ extension [Card] {
 }
 
 // 書籍のコード
-func shuffleOnce(cards: [Card]) -> [Card] {
-    var shuffledCards: [Card] = []
-    let splitIndex = cards.count / 2
-    var leftIndex = 0
-    var rightIndex = splitIndex
-    
-    while true {
-        // 終了条件
-        // 左右のどちらかが選択し終わったら残り側のカードを全部入れる
-        if leftIndex >= splitIndex {
-            shuffledCards.append(contentsOf: cards[rightIndex...])
-            break
-        } else if rightIndex >= cards.count {
-            shuffledCards.append(contentsOf: cards[leftIndex..<splitIndex])
-            break
-        }
-        
-        // 左右からランダムに選ぶ
-        if Bool.random() {
-            shuffledCards.append(cards[rightIndex])
-            rightIndex += 1
-        } else {
-            shuffledCards.append(cards[leftIndex])
-            leftIndex += 1
-        }
-    }
-    return shuffledCards
-}
-
-// 書籍のコード
 func shuffle(cards: [Card]) -> [Card] {
     var shuffledCards = cards
-    for _ in (1...7) {
-        shuffledCards = shuffleOnce(cards: shuffledCards)
+    for cardIndex in (0..<shuffledCards.count).reversed() {
+        let swapIndex = Int.random(in: (0...cardIndex))
+        shuffledCards.swapAt(swapIndex, cardIndex)
     }
     return shuffledCards
 }

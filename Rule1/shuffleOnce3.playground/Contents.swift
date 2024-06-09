@@ -1,4 +1,4 @@
-// P14
+// P16~P17
 
 import Foundation
 
@@ -30,6 +30,22 @@ extension [Card] {
 }
 
 // 書籍のコード
+func copyCard(destinationCards: [Card], sourceCards: [Card], sourceIndex: Int) -> (newDestinationCards: [Card], newIndex: Int) {
+    var destinationCards = destinationCards
+    destinationCards.append(sourceCards[sourceIndex])
+    return (destinationCards, sourceIndex + 1)
+}
+
+// 書籍のコード
+func copyCards(destinationCards: [Card], sourceCards: [Card], sourceIndex: Int, endIndex: Int) -> [Card] {
+    var destinationCards = destinationCards
+    var sourceIndex = sourceIndex
+    while sourceIndex < endIndex {
+        (destinationCards, sourceIndex) = copyCard(destinationCards: destinationCards, sourceCards: sourceCards, sourceIndex: sourceIndex)
+    }
+    return destinationCards
+}
+// 書籍のコード
 func shuffleOnce(cards: [Card]) -> [Card] {
     var shuffledCards: [Card] = []
     let splitIndex = cards.count / 2
@@ -40,20 +56,18 @@ func shuffleOnce(cards: [Card]) -> [Card] {
         // 終了条件
         // 左右のどちらかが選択し終わったら残り側のカードを全部入れる
         if leftIndex >= splitIndex {
-            shuffledCards.append(contentsOf: cards[rightIndex...])
+            shuffledCards = copyCards(destinationCards: shuffledCards, sourceCards: cards, sourceIndex: rightIndex, endIndex: cards.count)
             break
         } else if rightIndex >= cards.count {
-            shuffledCards.append(contentsOf: cards[leftIndex..<splitIndex])
+            shuffledCards = copyCards(destinationCards: shuffledCards, sourceCards: cards, sourceIndex: leftIndex, endIndex: splitIndex)
             break
         }
         
         // 左右からランダムに選ぶ
         if Bool.random() {
-            shuffledCards.append(cards[rightIndex])
-            rightIndex += 1
+            (shuffledCards, rightIndex) = copyCard(destinationCards: shuffledCards, sourceCards: cards, sourceIndex: rightIndex)
         } else {
-            shuffledCards.append(cards[leftIndex])
-            leftIndex += 1
+            (shuffledCards, leftIndex) = copyCard(destinationCards: shuffledCards, sourceCards: cards, sourceIndex: leftIndex)
         }
     }
     return shuffledCards
