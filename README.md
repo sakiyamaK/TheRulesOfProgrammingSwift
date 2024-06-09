@@ -7,6 +7,8 @@ https://github.com/sakiyamaK/TheRulesOfProgrammingSwift/tree/main/Rule1
 
 ## ルール2　バグは伝染する
 
+https://github.com/sakiyamaK/TheRulesOfProgrammingSwift/tree/main/Rule2
+
 ## ルール3　優れた名前こそ最高のドキュメントである
 
 ## ルール4　一般化には3つの例が必要
